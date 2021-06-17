@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>SpreedlyAirlines</title>
+    <title>Spreedly Airlines</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -10,6 +10,27 @@
   </head>
 
   <body>
-    <%= yield %>
+    <div id="main-content">
+
+      <div class="jumbotron">
+        <h2><%= link_to "Spreedly Airlines", flights_path(), :method => "get" %></h2>
+        <p>now with seatbelts for your safety</p>
+      </div>
+
+      <% 
+        messages =  ''
+        flash.each do |key, value|
+          messages += value + '<br /><br />'
+        end 
+      %>
+      <% if messages != '' %>
+        <div class="flash-messages">    
+          <div class="modal-body">
+            <%= sanitize messages %>
+          </div>
+        </div>
+      <% end %> 
+      <%= yield %>
+    </div>
   </body>
 </html>

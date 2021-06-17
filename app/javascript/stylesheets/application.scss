@@ -1,0 +1,58 @@
+@import "~bootstrap/scss/bootstrap";
+
+$white: #FFF;
+$black: #000;
+
+body {
+	background: $white;
+	color: $black;
+	font-family: 'Arial', sans-serif;
+}
+h1, h2 {
+	font-weight: bold;
+}
+p {
+	font-size: 16px;
+	color: $black;
+}
+
+.jumbotron {
+	width: 50%;
+	margin: 0 auto;
+	padding: 30px;
+    background: #0048CD;
+    text-align: center;
+    border-radius: 15px;
+    color:  $white;
+
+    h2 a {
+    	text-decoration: none;
+    	color:  $white;
+    }
+}
+
+.btn-primary {
+	color: $black;
+	border-color: $black;
+	margin-bottom: 5px;
+}
+.btn-sm {
+	border: 1px solid $black;
+	border-radius: 5px;
+	display: inline-block;
+	margin-bottom: 5px;
+}
+
+#main-content {
+	width:  90%;
+	margin:  20px auto;
+}
+
+.flash-messages {
+	border:  1px solid #0048CD;
+	border-radius: 10px;
+	padding:  10px;
+	width: 20%;
+	margin:  10px 0;
+	background-color: rgba(240, 144, 144, 0.7);
+}

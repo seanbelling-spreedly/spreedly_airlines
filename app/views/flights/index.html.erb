@@ -1,0 +1,11 @@
+<h1>Available flights</h1>
+
+<ul>
+<% @flights.each do |flight| %>
+  <li>
+    
+    From <%= flight.from_airport_code %> to <%= flight.to_airport_code %> for $<%= flight.price %> <%= link_to "Book this one", bookings_new_path(:flight_id => flight.id), :method => "get", :class => "btn-sm" %>
+  </li>
+<% end %>
+</ul>
+<%= link_to "See a list of all previous bookings", bookings_list_path(), :method => "get", :class => "link" %>

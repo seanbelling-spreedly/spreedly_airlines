@@ -1,0 +1,24 @@
+<h2>List of previous bookings</h2>
+
+<table class="table">
+	<tr>
+		<th>Full Name</th>
+		<th>Email Address</th>
+		<th>Transaction Type</th>
+		<th>Date Processed</th>
+	</tr>
+
+<% @transactions.each do |transaction| %>
+	<% payment_method = transaction['payment_method'] 
+		if payment_method.nil? # have a nil payment method in my response somehow, ugh need to handle it here
+			next
+		end
+	%>
+	<tr>
+   	<td><%= transaction["payment_method"]["full_name"] %> </td>
+    <td><%= transaction['payment_method']['email'] %> </td>
+    <td><%= transaction['transaction_type'] %> </td>
+   	<td><%= Date.parse(transaction['payment_method']['created_at']).strftime('%d-%b-%Y' ) %></td>
+	</tr>
+<% end %>
+</table>

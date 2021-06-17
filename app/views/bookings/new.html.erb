@@ -1,0 +1,81 @@
+<script src="https://core.spreedly.com/iframe/express-2.min.js"></script>
+
+<h2>Your Selected Flight</h1>
+<dl>
+  <dt>From:</dt><dd><%= @selected_flight.from_airport_code %></dd>
+  <dt>To:</dt><dd><%= @selected_flight.to_airport_code %></dd>
+  <dt>Cost:</dt><dd>$<%= @selected_flight.price %></dd>
+  <dt>Departing:</dt><dd><%= @selected_flight.departure_date %></dd>
+</dl>
+
+<p>Look good? Enter a few details below then click book it, or 
+ <%= link_to "go back", flights_path, :method => "get", :class => "link" %> and select another flight</p>
+
+
+<label>Full name: </label>
+<input type="text" name="full_name" id="full_name" placeholder="John Smitherson" />
+<br />
+<label>Email address: </label>
+<input type="text" name="user_email" id="user_email" placeholder="email@example.com" />
+<br />
+<label for="save_credit_card">Save credit card for future use? </label>
+<input type="checkbox" name="save_credit_card" id="save_credit_card" />
+<br />
+<label for="pmd">Don't trust us? Book through Expedia instead </label>
+<input type="checkbox" name="pmd" id="pmd" />
+<br /><br />
+
+<button class="btn btn-primary btn-lg btn-block" onclick="doCheckout()">Let's book it!</button></p>
+
+<%= form_for @booking  do |f| %>
+  <%= f.hidden_field :email %>
+  <%= f.hidden_field :payment_token %>
+  <%= f.hidden_field :amount_charged, value: @selected_flight.price %>
+  <%= f.hidden_field :flight_id, value: @selected_flight.id %>
+  <%= f.hidden_field :is_save_credit_card %>
+  <%= f.hidden_field :is_pmd %>
+<% end %>
+
+
+<script type="text/javascript">
+
+// Get this bad boy initialised on page load
+(function() {
+  SpreedlyExpress.init("4DfU0ASDqMiPdLIh7Y58vhQIYQV", {
+    "amount": "$<%= @selected_flight.price %>",
+    "company_name": "Sean Air",
+    "sidebar_top_description": "We probably won't crash",
+    "sidebar_bottom_description": "Hopefully"
+  });
+})();
+
+
+function doCheckout() {
+  let fullName =  document.getElementById("full_name").value;
+  let email =  document.getElementById("user_email").value;
+
+  if (!fullName || !email) {
+    alert('Full name and email address are required to book');
+    return;
+  }
+
+  
+  SpreedlyExpress.setDisplayOptions({
+    "full_name": document.getElementById("full_name").value
+  });
+  SpreedlyExpress.setPaymentMethodParams({
+    "email": document.getElementById("user_email").value
+  });
+
+  SpreedlyExpress.openView();
+
+  SpreedlyExpress.onPaymentMethod(function(token, paymentMethod) {
+    document.getElementById('booking_email').value = document.getElementById("user_email").value;
+    document.getElementById('booking_payment_token').value = token;
+    document.getElementById('booking_is_save_credit_card').value = document.getElementById("save_credit_card").checked;
+    document.getElementById('booking_is_pmd').value = document.getElementById("pmd").checked;
+    document.getElementById('new_booking').submit();
+  });
+
+};
+</script>
