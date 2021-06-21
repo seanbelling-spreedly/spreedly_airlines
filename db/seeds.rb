@@ -8,8 +8,9 @@
 
 
 # clear out anything from before
-Flight.delete_all
 Booking.delete_all
+Flight.delete_all
+
 
 # seed DB with soem flights
 Flight.create!(from_airport_code: 'PDX', to_airport_code: 'RDU', price: '321.12', departure_date: 3.days.from_now.strftime('%Y-%m-%d'))
